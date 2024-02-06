@@ -9,6 +9,8 @@ const ButtonTheme = {
     secondary: "",
     transparent:
       "bg-transparent active:bg-gray-100 dark:active:bg-gray-800 text-slate-950 dark:text-gray-400",
+    transparentInverse:
+      "bg-transparent active:bg-gray-100 dark:active:bg-gray-800 text-gray-100 dark:text-gray-400",
   },
   variants: {
     bordered: "bg-none outline-1 outline outline-gray-500",
@@ -26,7 +28,12 @@ const ButtonTheme = {
 type ButtonProps = {
   ButtonProps?: ButtonHTMLAttributes<HTMLButtonElement>;
   children: ReactNode;
-  color?: "default" | "primary" | "secondary" | "transparent";
+  color?:
+    | "default"
+    | "primary"
+    | "secondary"
+    | "transparent"
+    | "transparentInverse";
   size?: "default" | "lg" | "md" | "sm";
   variant?: "bordered" | "default" | "solid";
 };

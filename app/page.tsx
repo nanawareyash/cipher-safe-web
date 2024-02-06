@@ -45,6 +45,7 @@ export default function Home() {
             }}
             size="md"
             variant="solid"
+            color="transparentInverse"
           >
             <span>Get Started</span>
             <span>
