@@ -14,8 +14,10 @@
       "@/icons/*": ["./components/icons/*"],
       "@/molecules/*": ["./components/molecules/*"],
       "@/organisms/*": ["./components/organisms/*"],
+      "@/services/*": ["./services/*"],
       "@/styles/*": ["./styles/*"],
-      "@/templates/*": ["./components/templates/*"]
+      "@/templates/*": ["./components/templates/*"],
+      "@/utils/*": ["./utils/*"]
     },
     "plugins": [
       {
