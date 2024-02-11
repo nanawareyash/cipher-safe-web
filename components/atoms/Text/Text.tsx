@@ -5,6 +5,7 @@ const TextTheme = {
   colors: {
     default: "text-slate-950 dark:text-gray-400",
     defaultInverse: "text-gray-300 dark:text-gray-300",
+    error: "text-red-500",
     hyperlink: "text-blue-500",
     primary: "text-blue-600 dark:text-blue-400",
     primaryInverse: "text-gray-100 dark:text-blue-400",
@@ -40,6 +41,7 @@ type TextProps = {
   color?:
     | "default"
     | "defaultInverse"
+    | "error"
     | "hyperlink"
     | "primary"
     | "primaryInverse"

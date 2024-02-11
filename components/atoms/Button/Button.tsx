@@ -47,6 +47,7 @@ function Button({
 }: ButtonProps) {
   return (
     <button
+      type="button"
       {...ButtonProps}
       className={`${ButtonTheme.base} ${ButtonTheme.colors[color]} ${ButtonTheme.variants[variant]} ${ButtonTheme.sizes[size]} ${ButtonProps?.className}`}
     >
