@@ -5,10 +5,10 @@ const ButtonTheme = {
   colors: {
     default: "bg-none text-slate-950 dark:text-gray-400",
     primary:
-      "from-blue-700 dark:from-blue-900 to-sky-500 dark:to-sky-700 bg-gradient-to-br active:from-blue-800 active:to-blue-600  dark:active:from-blue-950 dark:active:to-blue-900 text-gray-50 dark:text-gray-200",
+      "from-blue-700 dark:from-blue-900 to-sky-500 dark:to-sky-700 bg-gradient-to-br active:from-blue-800 active:to-blue-600  dark:active:from-blue-950 dark:active:to-blue-900 text-gray-50 dark:text-gray-200 disabled:from-gray-100 disabled:to-gray-100 disabled:dark:from-gray-700 disabled:dark:to-gray-700 disabled:text-gray-400 disabled:dark:text-gray-500",
     secondary: "",
     transparent:
-      "bg-transparent active:bg-gray-100 dark:active:bg-gray-800 text-slate-950 dark:text-gray-400",
+      "bg-transparent active:bg-gray-100 dark:active:bg-gray-800 text-slate-950 dark:text-gray-400 disabled:bg-gray-100 disabled:dark:bg-gray-700 disabled:text-gray-400 disabled:dark:text-gray-500",
     transparentInverse:
       "bg-transparent active:bg-gray-100 dark:active:bg-gray-800 text-gray-100 dark:text-gray-400",
   },
