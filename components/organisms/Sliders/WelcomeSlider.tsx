@@ -17,25 +17,23 @@ function WelcomeSlider() {
       id: 0,
       imageUrl: "/assets/illustrations/welcome.svg",
       title: "Welcome to CipherSafe!",
-      subTitle: "Your digital fortress for secure password management.",
-      description:
-        "With CipherSafe, you can keep your sensitive information safe and easily accessible across all your devices.",
+      subTitle: "This is your super safe place for managing passwords.",
+      description: "CipherSafe keeps your important info protected.",
     },
     {
       id: 1,
       imageUrl: "/assets/illustrations/robust-encryption.svg",
       title: "Robust Encryption",
-      subTitle: "Secure passwords with high-end encryption algorithms.",
+      subTitle: "We use special codes to protect your passwords really well.",
       description:
-        "CipherSafe employs state-of-the-art encryption algorithms to ensure that your passwords are securely stored. Your data is protected against unauthorized access, providing you peace of mind in the digital world.",
+        "CipherSafe locks your passwords tight using the strongest codes. That means only you can access them.",
     },
     {
       id: 2,
       imageUrl: "/assets/illustrations/cross-platform.svg",
       title: "Seamless Cross-Platform Sync",
       subTitle: "Access your passwords anytime, anywhere!",
-      description:
-        "CipherSafe offers seamless synchronization across all your devices. Your passwords are at your fingertips, whether you're on your phone, tablet, or computer.",
+      description: "CipherSafe syncs your passwords on all devices",
     },
   ];
 

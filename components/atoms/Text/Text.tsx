@@ -15,7 +15,7 @@ const TextTheme = {
   variants: {
     default: "text-[1rem] lg:text-[1.1rem] xl:text-[1.2rem] 2xl:text-[1.3rem]",
     heading1:
-      "font-extrabold text-[1.5rem] lg:text-[1.7rem] xl:text-[1.9rem] 2xl:text-[2.1rem]",
+      "font-extrabold text-[1.7rem] lg:text-[1.9rem] xl:text-[2.1rem] 2xl:text-[2.3rem]",
     heading2:
       "font-bold text-[1.3rem] lg:text-[1.5rem] xl:text-[1.7rem] 2xl:text-[1.9rem]",
     heading3:

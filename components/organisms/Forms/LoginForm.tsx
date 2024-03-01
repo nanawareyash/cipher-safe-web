@@ -11,7 +11,7 @@ function LoginForm() {
   const [showPassword, setShowPassword] = useState<Boolean>(false);
 
   return (
-    <div className="w-full sm:w-[70%] md:w-full xl:w-[70%] flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4">
       {/* Title */}
       <Text variant="title" TextProps={{ className: "text-center" }}>
         Login

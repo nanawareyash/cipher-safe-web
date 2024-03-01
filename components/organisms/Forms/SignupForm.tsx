@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import Button from "@/atoms/Button/Button";
 import Text from "@/atoms/Text/Text";
@@ -16,6 +16,11 @@ import {
 
 function SignUpForm() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [contactNumber, setContactNumber] = useState<string>();
+  const [countryCode, setCountryCode] = useState<string>("+91");
+  const [email, setEmail] = useState<string>();
+  const [name, setName] = useState<string>();
+  const [nextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
   const [password1, setPassword1] = useState<string>();
   const [password1Error, setPassword1Error] = useState<boolean>();
   const [password2, setPassword2] = useState<string>();
@@ -26,14 +31,50 @@ function SignUpForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const slider = useRef<HTMLDivElement>(null);
 
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (formRef.current) {
-      const formData = new FormData(formRef.current);
-      const data = formDataToJson(formData);
-      console.log(data);
+  const handleNextDisableState = useCallback(() => {
+    if (
+      (name && activeSlide === 0 && validatePersonName(name)) ||
+      (email && activeSlide === 1 && validateEmail(email)) ||
+      (countryCode &&
+        contactNumber &&
+        activeSlide === 2 &&
+        validateCountryCode(countryCode) &&
+        validateContactNumber(contactNumber)) ||
+      (password1 &&
+        password2 &&
+        activeSlide === 3 &&
+        validatePassword(password1) &&
+        validatePassword(password2))
+    ) {
+      setNextButtonDisabled(false);
+    } else {
+      setNextButtonDisabled(true);
+    }
+  }, [
+    activeSlide,
+    name,
+    email,
+    countryCode,
+    contactNumber,
+    password1,
+    password2,
+  ]);
+
+  const handleFormSubmit = () => {
+    if (activeSlide === 3) {
+      if (formRef.current) {
+        const formData = new FormData(formRef.current);
+        const data = formDataToJson(formData);
+      }
+    } else {
+      setActiveSlide((prev) => (prev < 3 ? prev + 1 : prev));
+      handleNextDisableState();
     }
   };
+
+  useEffect(() => {
+    handleNextDisableState();
+  }, [handleNextDisableState]);
 
   // UseEffect to compare password and current password
   useEffect(() => {
@@ -46,10 +87,14 @@ function SignUpForm() {
         setPassword2Error(true);
       }
     } else {
-      password1 ? setPassword1Error(false) : setPassword1Error(undefined);
+      password1 ? setPassword1Error(true) : setPassword1Error(undefined);
       setPassword2Error(undefined);
     }
-  }, [password1, password2]);
+  }, [password2]);
+
+  useEffect(() => {
+    !password1 && setPassword1Error(undefined);
+  }, [password1]);
 
   // UseEffect used to scroll slide
   useEffect(() => {
@@ -59,21 +104,21 @@ function SignUpForm() {
   }, [activeSlide]);
 
   return (
-    <div className="w-full sm:w-[70%] md:w-full xl:w-[70%] ">
+    <div className="w-full">
       <form
         className="flex flex-col gap-4"
-        onSubmit={(e) => handleFormSubmit(e)}
+        onSubmit={(e) => e.preventDefault()}
         ref={formRef}
       >
         {/* Form Slides */}
         <div className="flex overflow-hidden scroll-smooth" ref={slider}>
           {/* Name Form */}
-          <div className="min-w-full flex flex-col justify-between gap-4 pt-10 px-1">
+          <div className="min-w-full flex flex-col justify-between gap-4 px-1">
             <div className="flex flex-col gap-2 py-5">
-              <Text variant="heading1" color="primary">
+              <Text variant="heading2" color="primary">
                 Let's start with the basics!
               </Text>
-              <Text variant="subHeading2">
+              <Text variant="subHeading3">
                 We'd love to know your name.
                 <br /> What should we call you?
               </Text>
@@ -83,6 +128,7 @@ function SignUpForm() {
                 id: "name",
                 name: "name",
                 onFocus: () => setActiveSlide(0),
+                onKeyUp: (event) => setName(event.currentTarget.value),
                 placeholder: "Amit Kumar",
                 type: "text",
               }}
@@ -95,10 +141,10 @@ function SignUpForm() {
           {/* Email Form */}
           <div className="min-w-full flex flex-col justify-between gap-4 pt-10 px-1">
             <div className="flex flex-col gap-2 py-5">
-              <Text variant="heading1" color="primary">
+              <Text variant="heading2" color="primary">
                 Great! Now, how can we reach you?
               </Text>
-              <Text variant="subHeading2">
+              <Text variant="subHeading3">
                 Give us your email, and we'll keep you in the loop.
               </Text>
             </div>
@@ -107,6 +153,7 @@ function SignUpForm() {
                 id: "email",
                 name: "email",
                 onFocus: () => setActiveSlide(1),
+                onKeyUp: (event) => setEmail(event.currentTarget.value),
                 placeholder: "username@gmail.com",
                 type: "text",
               }}
@@ -119,10 +166,10 @@ function SignUpForm() {
           {/* Contact no. Form */}
           <div className="min-w-full flex flex-col justify-between gap-4 pt-10 px-1">
             <div className="flex flex-col gap-2 py-5">
-              <Text variant="heading1" color="primary">
+              <Text variant="heading2" color="primary">
                 Almost there! Mind sharing your digits?
               </Text>
-              <Text variant="subHeading2">
+              <Text variant="subHeading3">
                 Your phone number will help us keep things personal.
               </Text>
             </div>
@@ -134,10 +181,12 @@ function SignUpForm() {
                   id: "country_code",
                   name: "country_code",
                   onFocus: () => setActiveSlide(2),
+                  onKeyUp: (event) => setCountryCode(event.currentTarget.value),
                   placeholder: "+91",
                   type: "text",
                 }}
                 label="Code"
+                showError={false}
                 startElement={<i className="bi bi-telephone-fill"></i>}
                 validator={validateCountryCode}
               />
@@ -147,6 +196,8 @@ function SignUpForm() {
                   id: "contact_no",
                   name: "contact_no",
                   onFocus: () => setActiveSlide(2),
+                  onKeyUp: (event) =>
+                    setContactNumber(event.currentTarget.value),
                   placeholder: "9876543210",
                   type: "text",
                 }}
@@ -159,10 +210,10 @@ function SignUpForm() {
           {/* Password Form */}
           <div className="min-w-full flex flex-col justify-between gap-4 pt-10 px-1">
             <div className="flex flex-col gap-2 py-5">
-              <Text variant="heading1" color="primary">
+              <Text variant="heading2" color="primary">
                 Securing your account!
               </Text>
-              <Text variant="subHeading2">
+              <Text variant="subHeading3">
                 Create a strong password. Mix it up for extra security.
               </Text>
             </div>
@@ -257,9 +308,9 @@ function SignUpForm() {
           <Button
             ButtonProps={{
               className: "w-full",
-              onClick: () =>
-                setActiveSlide((prev) => (prev < 3 ? prev + 1 : prev)),
-              type: password2Error === false ? "submit" : "button",
+              onClick: () => handleFormSubmit(),
+              type: "button",
+              disabled: nextButtonDisabled,
             }}
             color="primary"
             size="md"
